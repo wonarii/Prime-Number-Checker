@@ -8,8 +8,7 @@
 ; ### INITIALIZE VARIABLES HERE ###
 section .data 
 	number db 5                       ; ### TEST NUMBER (CHANGE LATER)
-	answer db 1                       ; ### ANSWER (1 for prime, 0 for composite number)
-	testanswer db 1			  ; ### testanswer
+	answer dd 1                       ; ### ANSWER (1 for prime, 0 for composite number)
 
 	prime_msg db  'Number is prime', 0x0a 
         not_prime_msg db 'Number is NOT prime', 0x0a
@@ -109,15 +108,13 @@ _start:
 
 
 ; ### WIP FOR IF STATEMENT BASED ON ANSWER assembly sucks
-mov byte [answer], 0 ;
+mov [answer], 0 ;
 mov eax, answer ;
 cmp eax, 1 ;
-je is_prime ; 
-call display_not_prime;
-jmp endingf ;
-is_prime: call display_prime ;
-endingf: call display_ending_msg ;
-
+je display_prime ;
+cmp eax, 0 ; 
+je display_not_prime;
+call display_ending_msg ;
 
 
 ; ### EXIT (DO NOT TOUCH) ###
