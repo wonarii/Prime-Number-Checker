@@ -7,22 +7,13 @@
 
 ; ### INITIALIZE VARIABLES HERE ###
 section .data 
-<<<<<<< HEAD
-	number db 5                       ; ### TEST NUMBER (CHANGE LATER)
-	answer dd 1                       ; ### ANSWER (1 for prime, 0 for composite number)
 
-	prime_msg db  'Number is prime', 0x0a 
-        not_prime_msg db 'Number is NOT prime', 0x0a
-	ending_msg db 'Thank you for using prime checker!', 0x0a
-
-=======
 	number dd 21                       				; ### TEST NUMBER (CHANGE LATER)
 	answer dd 1                       				; ### ANSWER (1 for prime, 0 for composite number)
 	
 	prime_msg db  'Number is prime', 0x0a
 	not_prime_msg db 'Number is NOT prime', 0x0a
->>>>>>> 2130ae457fcc4a945532ad22770e5690c006a4c7
-
+	ending_msg db 'Thank you for using prime checker!', 0x0a
 	
 
 	;variables for gettting inputs
@@ -155,19 +146,12 @@ divide_by_odd:
 ; ### DISPLAY PRIME ### 
 ; ### This function displays a message when a number is PRIME
 display_prime: 
-<<<<<<< HEAD
 mov eax, 4 ;
 mov ebx, 1 ; 
 mov ecx, prime_msg ;
 mov edx, 16 ; 
 int 80h ;
 ret ;
-=======
-
-	
-
->>>>>>> 2130ae457fcc4a945532ad22770e5690c006a4c7
-
 	
 
 
@@ -200,26 +184,19 @@ _start:
 
 	;call get_inputs		;jumps to get inputs
 
-
-<<<<<<< HEAD
-; ### WIP FOR IF STATEMENT BASED ON ANSWER assembly sucks
-mov [answer], 0 ;
-mov eax, answer ;
-cmp eax, 1 ;
-je display_prime ;
-cmp eax, 0 ; 
-je display_not_prime;
-call display_ending_msg ;
-=======
 	call divide_by_odd		;divides the number by every odd number, updates eax with either 1 or 0,
 
-	
-	
+	; ### WIP
+	;cmp eax, 1 ;
+	;je prime_t ;
+	;call display_not_prime ;
+	;jmp end_t ;
+	;prime_t:
+	;call display_prime ;
+	;end_t:
+	;call display_ending_msg ;
 
 
-
-
->>>>>>> 2130ae457fcc4a945532ad22770e5690c006a4c7
 
 
 ; ### EXIT (DO NOT TOUCH) ###
