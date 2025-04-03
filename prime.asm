@@ -9,9 +9,8 @@
 section .data 
 	number db 5                       ; ### TEST NUMBER (CHANGE LATER)
 	answer db 1                       ; ### ANSWER (1 for prime, 0 for composite number)
-	test db 1			  ; ### test value for prime and no prime for conditional branches (WIP)	
 
-	prime_msg db  'Number is prime', 0x0a
+	prime_msg db  'Number is prime', 0x0a 
         not_prime_msg db 'Number is NOT prime', 0x0a
 
 
@@ -65,12 +64,12 @@ divide_by_odd:
 ; ### DISPLAY PRIME ### 
 ; ### This function displays a message when a number is PRIME
 display_prime: 
-move eax, 4
-move ebx, 1
-move ecx, prime_message
-move edx, 10
-int 80h
-ret
+mov eax, 4 ;
+mov ebx, 1 ; 
+mov ecx, prime_msg ;
+mov edx, 16 ; 
+int 80h ;
+ret ;
 
 
 
@@ -78,9 +77,13 @@ ret
 
 ; ### DISPLAY NOT PRIME ###
 ; ### This function displays a message when a number is NOT prime
-display_not_prime: 
-
-ret
+display_not_prime:
+mov eax, 4 ;
+mov ebx, 1 ;
+mov ecx, not_prime_msg ; 
+mov edx, 20 ;
+int 80h ;
+ret ;
 
 
 
@@ -91,10 +94,13 @@ ret
 ; ### We will use this to call the subroutines and simple code
 _start: 
 
-CMP answer, test 	
-BEQ display_prime
-BNE display_not_prime
 
+
+; ### WIP FOR IF STATEMENT BASED ON ANSWER assembly sucks
+and answer, 1 ;
+je display_prime ; 
+and answer, 0 ;
+je display_not_prime ;
 
 
 
@@ -103,6 +109,7 @@ BNE display_not_prime
 	mov eax, 1
 	mov ebx, 0
 	int 80h
+
 
 
 
