@@ -7,11 +7,13 @@
 
 ; ### INITIALIZE VARIABLES HERE ###
 section .data 
-	number db 5                       ; ### TEST NUMBER (CHANGE LATER)
-	answer db 1                       ; ### ANSWER (1 for prime, 0 for composite number)
+	number dd 21                       				; ### TEST NUMBER (CHANGE LATER)
+	answer dd 1                       				; ### ANSWER (1 for prime, 0 for composite number)
 	
 	prime_msg db  'Number is prime', 0x0a
-        not_prime_msg db 'Number is NOT prime', 0x0a
+	not_prime_msg db 'Number is NOT prime', 0x0a
+
+	
 
 	;variables for gettting inputs
 	ask_number_msg db 'Please enter a number between 0 and 255', 0x0a ; asking user for a number
@@ -20,6 +22,8 @@ section .data
 	error_msg db 'Incorrect input, try again', 0x0a 		; if the input is invalid
 
 	
+	odd_number dd 3		 					; ### Used in divide_by_odd
+	half_number dd 10		  				; ### The number halved                   UPDATE THIS WHEN CHANGING NUMBER OR IN DIVIDE_BY_2 
 
 ; ### PUT CODE (SUBROUTINES) IN HERE ### 
 section .text 
@@ -76,15 +80,15 @@ ASKAGAIN:
 
 
 ; ### DIVIDE BY 2 ###
-; ### This function should divide a given number by 2 and check if the remainder is 0
-; ### Return 1 if it IS divisable by 2
-; ### Return 0 if it is NOT divisable by 2
+; ### This function should shift right once and check if the carry flag is 0
+; ### Return 0 if it IS divisable by 2
+; ### Return 1 if it is NOT divisable by 2
 ; ### Try to save result* 
 divide_by_two: 
 	
 	
 
-
+	
 
 
 
@@ -92,10 +96,46 @@ divide_by_two:
 ; ### DIVIDE BY ODD ###
 ; ### This function should divide a given number by 2n + 1 and check if the remainder is 0
 ; ### n should keep incrementing and 2n + 1 should be less than number/2 (LOOP IN _start)  
-; ### Return 1 if it IS divisable by 2n + 1
-; ### Return 0 if it is NOT divisable by 2n + 1
+; ### Return 0 if it IS divisable by 2n + 1
+; ### Return 1 if it is NOT divisable by 2n + 1
 divide_by_odd: 
+	
+		
+	
+.start_loop: 
+		mov eax, [number]
+		mov ebx, [odd_number]
+		xor edx, edx
+		div ebx
+				
+		
+		test edx, edx
+		jz .found_divisor
+		
 
+		mov eax, [half_number]
+		cmp [odd_number], eax
+		jge .not_found_divisor
+		add byte [odd_number], 2
+
+		jmp .start_loop
+
+
+		
+.not_found_divisor:
+
+		mov eax, 1
+		;call display_prime
+		ret
+		
+	
+.found_divisor:
+		mov eax, 0
+		;call display_not_prime
+		ret 
+	
+		  
+			
 
 
 
@@ -106,10 +146,10 @@ divide_by_odd:
 ; ### This function displays a message when a number is PRIME
 display_prime: 
 
+	
 
 
-
-
+	
 
 
 ; ### DISPLAY NOT PRIME ###
@@ -122,13 +162,17 @@ display_not_prime:
 
 
 
-
 ; ### MAIN FUNCTION ###
 ; ### We will use this to call the subroutines and simple code
 _start: 
-	call get_inputs		;jumps to get inputs
+
+	;call get_inputs		;jumps to get inputs
 
 
+	call divide_by_odd		;divides the number by every odd number, updates eax with either 1 or 0,
+
+	
+	
 
 
 
@@ -136,7 +180,7 @@ _start:
 
 
 ; ### EXIT (DO NOT TOUCH) ###
-
+exit:
 	mov eax, 1
 	mov ebx, 0
 	int 80h
