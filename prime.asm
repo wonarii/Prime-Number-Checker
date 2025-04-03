@@ -1,18 +1,19 @@
 ; Group Members
 ; Jimmy Le ID 40316405
 ; Arielle Wong 40313593
-; Joaquin
+; Joaquin Nahman 40270510
 ; Josh
 
 
 ; ### INITIALIZE VARIABLES HERE ###
 section .data 
+
 	number dd 21                       				; ### TEST NUMBER (CHANGE LATER)
 	answer dd 1                       				; ### ANSWER (1 for prime, 0 for composite number)
 	
 	prime_msg db  'Number is prime', 0x0a
 	not_prime_msg db 'Number is NOT prime', 0x0a
-
+	ending_msg db 'Thank you for using prime checker!', 0x0a
 	
 
 	;variables for gettting inputs
@@ -145,21 +146,36 @@ divide_by_odd:
 ; ### DISPLAY PRIME ### 
 ; ### This function displays a message when a number is PRIME
 display_prime: 
-
-	
-
-
+mov eax, 4 ;
+mov ebx, 1 ; 
+mov ecx, prime_msg ;
+mov edx, 16 ; 
+int 80h ;
+ret ;
 	
 
 
 ; ### DISPLAY NOT PRIME ###
 ; ### This function displays a message when a number is NOT prime
-display_not_prime: 
+display_not_prime:
+mov eax, 4 ;
+mov ebx, 1 ;
+mov ecx, not_prime_msg ; 
+mov edx, 20 ;
+int 80h ;
+ret ;
 
 
 
-
-
+; ### DISPLAY END MESSAGE ###
+; ### This function displays the program ending message
+display_ending_msg:
+mov eax, 4 ;
+mov ebx, 1 ;
+mov ecx, ending_msg ;
+mov edx, 36 ;
+int 80h ;
+ret ;
 
 
 ; ### MAIN FUNCTION ###
@@ -168,13 +184,17 @@ _start:
 
 	;call get_inputs		;jumps to get inputs
 
-
 	call divide_by_odd		;divides the number by every odd number, updates eax with either 1 or 0,
 
-	
-	
-
-
+	; ### WIP
+	;cmp eax, 1 ;
+	;je prime_t ;
+	;call display_not_prime ;
+	;jmp end_t ;
+	;prime_t:
+	;call display_prime ;
+	;end_t:
+	;call display_ending_msg ;
 
 
 
@@ -184,6 +204,7 @@ exit:
 	mov eax, 1
 	mov ebx, 0
 	int 80h
+
 
 
 
