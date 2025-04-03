@@ -1,7 +1,7 @@
 ; Group Members
 ; Jimmy Le ID 40316405
 ; Arielle Wong 40313593
-; Joaquin
+; Joaquin Nahman 40270510
 ; Josh
 
 
@@ -64,8 +64,9 @@ divide_by_odd:
 ; ### DISPLAY PRIME ### 
 ; ### This function displays a message when a number is PRIME
 display_prime: 
-
-
+db number
+db " is prime!"
+ret
 
 
 
@@ -74,8 +75,9 @@ display_prime:
 ; ### DISPLAY NOT PRIME ###
 ; ### This function displays a message when a number is NOT prime
 display_not_prime: 
-
-
+db number
+db " is not prime!"
+ret
 
 
 
@@ -87,8 +89,8 @@ display_not_prime:
 _start: 
 
 
-
-
+Branch_if_[answer]<1 call display_prime
+Branch_if_[answer]>1 call display_not_prime
 
 
 
