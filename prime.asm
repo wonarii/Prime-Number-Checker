@@ -40,31 +40,31 @@ get_inputs:
 
 				;COLLECT NUMBER
 	mov eax, 3		;
-	mov ebx, 0		;
+	mov ebx, 1		;
 	mov ecx, number		;will put collected input into number
 	mov edx, 3		;the length of the input should not exceed 3 characters (0-255)
 	int 80h			;collect the message
 
+				;TRANSFORM STRING TO INT
+	mov ecx, number
+	sub ecx, '0'		;to un-ascii
+	mov [number], ecx	;puts un-ascii number in number
 	
 
 				;CHECK min
-	mov eax, number		; puts number in eax
-	mov ebx, minNumber	;puts minNumber in ebx
-	cmp eax, ebx		;comparing number with 0
-	jl ASKAGAIN 		; number < 0, jumps back to asking
+	;mov eax, number		; puts number in eax
+	;mov ebx, minNumber	;puts minNumber in ebx
+	;cmp eax, ebx		;comparing number with 0
+	;jl ASKAGAIN 		; number < 0, jumps back to asking
 
 				;CHECK max
-	mov eax, number		; puts number in eax
-	mov ebx, maxNumber	; puts max number in ebx
-	cmp eax, ebx		;comparing number with 255 
-	jg ASKAGAIN		; number > 255, jumps to ask again
+	;mov eax, number		; puts number in eax
+	;mov ebx, maxNumber	; puts max number in ebx
+	;cmp eax, ebx		;comparing number with 255 
+	;jg ASKAGAIN		; number > 255, jumps to ask again
 
 	;IF THE NUMBER IS VALID
-				;TRANSFORM STRING TO INT
-	sub ecx, '0'		;to un-ascii
-	mov [number], ecx	;puts un-ascii number in number
-
-	jmp divide_by_two	;GOING TO NEXT STEP 
+	ret	;GOING TO NEXT STEP 
 	
 ASKAGAIN:
 	mov eax, 4		;
@@ -126,7 +126,7 @@ display_not_prime:
 ; ### MAIN FUNCTION ###
 ; ### We will use this to call the subroutines and simple code
 _start: 
-	jmp get_inputs		;jumps to get inputs
+	call get_inputs		;jumps to get inputs
 
 
 
