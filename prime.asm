@@ -9,9 +9,12 @@
 section .data 
 	number db 5                       ; ### TEST NUMBER (CHANGE LATER)
 	answer db 1                       ; ### ANSWER (1 for prime, 0 for composite number)
+	testanswer db 1			  ; ### testanswer
 
 	prime_msg db  'Number is prime', 0x0a 
         not_prime_msg db 'Number is NOT prime', 0x0a
+	ending_msg db 'Thank you for using prime checker!', 0x0a
+
 
 
 ; ### PUT CODE (SUBROUTINES) IN HERE ### 
@@ -87,6 +90,15 @@ ret ;
 
 
 
+; ### DISPLAY END MESSAGE ###
+; ### This function displays the program ending message
+display_ending_msg:
+mov eax, 4 ;
+mov ebx, 1 ;
+mov ecx, ending_msg ;
+mov edx, 36 ;
+int 80h ;
+ret ;
 
 
 
@@ -97,10 +109,14 @@ _start:
 
 
 ; ### WIP FOR IF STATEMENT BASED ON ANSWER assembly sucks
-and answer, 1 ;
-je display_prime ; 
-and answer, 0 ;
-je display_not_prime ;
+mov byte [answer], 0 ;
+mov eax, answer ;
+cmp eax, 1 ;
+je is_prime ; 
+call display_not_prime;
+jmp endingf ;
+is_prime: call display_prime ;
+endingf: call display_ending_msg ;
 
 
 
