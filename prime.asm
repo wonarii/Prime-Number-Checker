@@ -1,6 +1,6 @@
 ; Group Members
 ; Jimmy Le ID 40316405
-; Arielle Wong ID
+; Arielle Wong 40313593
 ; Joaquin
 ; Josh
 
