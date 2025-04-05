@@ -8,7 +8,7 @@
 ; ### INITIALIZE VARIABLES HERE ###
 section .data 
 
-	number dd 21                       				; ### TEST NUMBER (CHANGE LATER)
+	number dd 19                       				; ### TEST NUMBER (CHANGE LATER)
 	answer dd 1                       				; ### ANSWER (1 for prime, 0 for composite number)
 	
 	prime_msg db  'Number is prime', 0x0a
@@ -29,6 +29,9 @@ section .data
 ; ### PUT CODE (SUBROUTINES) IN HERE ### 
 section .text 
 	global _start
+
+
+
 
 
 
@@ -146,61 +149,72 @@ divide_by_odd:
 ; ### DISPLAY PRIME ### 
 ; ### This function displays a message when a number is PRIME
 display_prime: 
-mov eax, 4 ;
-mov ebx, 1 ; 
-mov ecx, prime_msg ;
-mov edx, 16 ; 
-int 80h ;
-ret ;
+	mov eax, 4 
+	mov ebx, 1  
+	mov ecx, prime_msg 
+	mov edx, 16  
+	int 80h 
+	ret 
 	
 
 
 ; ### DISPLAY NOT PRIME ###
 ; ### This function displays a message when a number is NOT prime
 display_not_prime:
-mov eax, 4 ;
-mov ebx, 1 ;
-mov ecx, not_prime_msg ; 
-mov edx, 20 ;
-int 80h ;
-ret ;
+	mov eax, 4 
+	mov ebx, 1
+	mov ecx, not_prime_msg  
+	mov edx, 20 
+	int 80h 
+	ret 
 
 
 
 ; ### DISPLAY END MESSAGE ###
 ; ### This function displays the program ending message
 display_ending_msg:
-mov eax, 4 ;
-mov ebx, 1 ;
-mov ecx, ending_msg ;
-mov edx, 36 ;
-int 80h ;
-ret ;
+	mov eax, 4
+	mov ebx, 1 
+	mov ecx, ending_msg 
+	mov edx, 36 
+	int 80h 
+	ret 
 
 
 ; ### MAIN FUNCTION ###
 ; ### We will use this to call the subroutines and simple code
 _start: 
 
+
+	
+
 	;call get_inputs		;jumps to get inputs
 
 	call divide_by_odd		;divides the number by every odd number, updates eax with either 1 or 0,
 
-	; ### WIP
-	;cmp eax, 1 ;
-	;je prime_t ;
-	;call display_not_prime ;
-	;jmp end_t ;
-	;prime_t:
-	;call display_prime ;
-	;end_t:
-	;call display_ending_msg ;
+	
+	mov [answer], eax		;actions to take if prime	
+	cmp eax, 1 
+	je prime_condition
+	
+	cmp eax, 0			;actions to take if not prime
+	je not_prime_condition
+	 
+	
+prime_condition: 
+	call display_prime
+	jmp exit
 
+not_prime_condition:
+	call display_not_prime
+	jmp exit
 
 
 
 ; ### EXIT (DO NOT TOUCH) ###
 exit:
+	call display_ending_msg
+
 	mov eax, 1
 	mov ebx, 0
 	int 80h
